@@ -155,13 +155,19 @@ function render(){
 function renderMeta(){
   $('metaPeriodo').textContent = MIN_F === MAX_F ? fFecha(MIN_F, true) : `${fFecha(MIN_F)} – ${fFecha(MAX_F, true)}`;
   $('metaTotal').textContent = DATA.length;
+
+  const el = $('lastUpd');
   if (PAYLOAD && PAYLOAD.generatedAt){
-    try {
-      $('metaCorte').textContent = new Date(PAYLOAD.generatedAt)
-        .toLocaleString('es-CO', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
-    } catch { $('metaCorte').textContent = PAYLOAD.generatedAt.slice(0,16).replace('T',' '); }
+    const g = new Date(PAYLOAD.generatedAt);
+    let abs;
+    try { abs = g.toLocaleString('es-CO', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'}); }
+    catch { abs = PAYLOAD.generatedAt.slice(0, 16).replace('T', ' '); }
+    const min = Math.max(0, Math.round((Date.now() - g.getTime()) / 60000));
+    const rel = min < 1 ? 'recién' : min < 60 ? `hace ${min} min` : `hace ${Math.round(min / 60)} h`;
+    el.innerHTML = `<span class="dotu"></span>Última actualización: <b>${abs}</b> · ${rel}`;
+    el.title = 'Última vez que el tablero leyó el Google Sheet. Se actualiza cada hora.';
   } else {
-    $('metaCorte').textContent = 'datos de ejemplo';
+    el.innerHTML = `<span class="dotu warn"></span>datos de ejemplo (sin conexión al Sheet)`;
   }
 }
 

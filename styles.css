@@ -118,6 +118,16 @@ h1{font-size:1.6rem; font-weight:650; letter-spacing:-.015em; line-height:1.15; 
   transition:background .14s, color .14s, border-color .14s;
 }
 .chip-btn:hover{color:var(--ink); border-color:var(--accent)}
+.tools-right{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.last-upd{
+  font-size:.78rem; color:var(--muted); display:inline-flex; align-items:center; gap:7px; white-space:nowrap;
+}
+.last-upd b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
+.last-upd .dotu{
+  width:8px; height:8px; border-radius:50%; flex:none; background:var(--good);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 22%, transparent);
+}
+.last-upd .dotu.warn{background:var(--warn); box-shadow:0 0 0 3px color-mix(in srgb,var(--warn) 22%, transparent)}
 .theme-toggle{
   border:1px solid var(--line); background:var(--panel-2); color:var(--muted);
   width:34px; height:34px; border-radius:8px; cursor:pointer; display:grid; place-items:center;
