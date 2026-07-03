@@ -10,7 +10,7 @@
    q=consulta  c=categoría de falla  o=observación
    La sesión intermedia venía por # de fila; se le asignó 2026-06-24. */
 
-const DATA = [
+const FALLBACK = [
   // ----- 16 jun 2026 (35 pruebas) -----
   {f:'2026-06-16', s:'16 jun', r:'SAT'},
   {f:'2026-06-16', s:'16 jun', r:'SAT'},
@@ -95,9 +95,14 @@ const CAT_LABEL = {
   infofail: 'Generación de informes falla',
   otro:     'Otro / sin clasificar',
 };
-const SESSIONS = ['16 jun', '24 jun', '3 jul'];
-const SESSION_FECHA = {'16 jun':'2026-06-16', '24 jun':'2026-06-24', '3 jul':'2026-07-03'};
-const MIN_F = '2026-06-16', MAX_F = '2026-07-03';
+// Datos: del Sheet (data.js, generado cada hora) o, si no está, del respaldo embebido.
+const PAYLOAD = (typeof window !== 'undefined' && window.DASHBOARD_DATA) ? window.DASHBOARD_DATA : null;
+let DATA = (PAYLOAD && Array.isArray(PAYLOAD.rows) && PAYLOAD.rows.length) ? PAYLOAD.rows : FALLBACK;
+let MIN_F = DATA.reduce((a, x) => x.f < a ? x.f : a, DATA[0].f);
+let MAX_F = DATA.reduce((a, x) => x.f > a ? x.f : a, DATA[0].f);
+
+const MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const fFecha = (iso, y) => { const [Y,M,D] = iso.split('-'); return Number(D) + ' ' + MESES[Number(M)-1] + (y ? ' ' + Y : ''); };
 
 /* ---------- 2. Utilidades ---------- */
 const $ = (id) => document.getElementById(id);
@@ -141,11 +146,23 @@ function render(){
         'Sin pruebas evaluadas en el rango', 'Satisfacción');
   gauge('gaugeMin', 'capMin', 'badgeMin', m.min1Pct,
         `<b>${m.min1yes}</b> de <b>${m.medidas}</b> medidas`,
-        'Aún no se mide en este rango (empieza el 3 jul)', 'Respuesta < 1 min');
+        'Aún no se registra en este rango', 'Respuesta < 2 min');
   renderStats(m);
   renderFallas(m);
   renderNota(m);
-  $('metaTotal').textContent = m.total;
+}
+
+function renderMeta(){
+  $('metaPeriodo').textContent = MIN_F === MAX_F ? fFecha(MIN_F, true) : `${fFecha(MIN_F)} – ${fFecha(MAX_F, true)}`;
+  $('metaTotal').textContent = DATA.length;
+  if (PAYLOAD && PAYLOAD.generatedAt){
+    try {
+      $('metaCorte').textContent = new Date(PAYLOAD.generatedAt)
+        .toLocaleString('es-CO', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
+    } catch { $('metaCorte').textContent = PAYLOAD.generatedAt.slice(0,16).replace('T',' '); }
+  } else {
+    $('metaCorte').textContent = 'datos de ejemplo';
+  }
 }
 
 function renderVerdict(m){
@@ -298,4 +315,5 @@ function initTheme(){
 /* ---------- 12. Arranque ---------- */
 initTheme();
 initFilter();
+renderMeta();
 render();

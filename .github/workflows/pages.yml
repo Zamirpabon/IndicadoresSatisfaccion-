@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '17 * * * *'   # cada hora (minuto 17) lee el Sheet y republica
   workflow_dispatch:
 
 permissions:
@@ -23,6 +25,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Generar data.js desde el Google Sheet
+        run: node build-data.mjs
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload site

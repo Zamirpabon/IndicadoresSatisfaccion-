@@ -20,9 +20,9 @@
         </div>
       </div>
       <dl class="meta">
-        <div><dt>Periodo</dt><dd>16 jun – 3 jul 2026</dd></div>
-        <div><dt>Corte</dt><dd>3 jul 2026</dd></div>
-        <div><dt>Pruebas</dt><dd class="tnum" id="metaTotal">62</dd></div>
+        <div><dt>Periodo</dt><dd id="metaPeriodo">—</dd></div>
+        <div><dt>Actualizado</dt><dd id="metaCorte">—</dd></div>
+        <div><dt>Pruebas</dt><dd class="tnum" id="metaTotal">—</dd></div>
       </dl>
     </header>
 
@@ -53,8 +53,8 @@
       </section>
 
       <section class="panel gauge-card">
-        <h2>Respuesta &lt; 1 minuto</h2>
-        <p class="phead-note">% de respuestas entregadas en menos de un minuto.</p>
+        <h2>Respuesta &lt; 2 minutos</h2>
+        <p class="phead-note">% de respuestas entregadas en menos de dos minutos.</p>
         <div id="gaugeMin"></div>
         <div class="gauge-cap" id="capMin"></div>
         <div class="gauge-badge" id="badgeMin"></div>
@@ -81,8 +81,8 @@
     </section>
 
     <footer>
-      <b>Fuente:</b> matriz de pruebas del asistente (Google Sheets) · <b>62 registros</b> entre el 16 jun y el 3 jul de 2026.<br>
-      <b>Cálculo:</b> Satisfacción = satisfactorias ÷ evaluadas · Respuesta &lt; 1 min = medidas que cumplieron ÷ medidas (se empezó a medir el 3 jul).
+      <b>Fuente:</b> Google Sheet de pruebas del asistente · se actualiza automáticamente cada hora.<br>
+      <b>Cálculo:</b> Satisfacción = satisfactorias ÷ evaluadas (excluye sin marcar) · Respuesta &lt; 2 min = medidas que cumplieron ÷ medidas.
     </footer>
 
   </div>
@@ -90,6 +90,7 @@
   <div id="tt"></div>
   <noscript><p style="text-align:center;color:#888">Este tablero necesita JavaScript activado para mostrar los indicadores.</p></noscript>
 
+  <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
