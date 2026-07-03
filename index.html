@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Indicadores — Asistente Mariana · Conalca</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+
+    <!-- ===== Cabecera ===== -->
+    <header class="masthead">
+      <div class="brand">
+        <div class="mono-mark" aria-hidden="true">M</div>
+        <div>
+          <div class="eyebrow">Conalca · Super SAC</div>
+          <h1>Desempeño del asistente Mariana</h1>
+          <p class="sub">Indicadores de calidad · matriz de pruebas de conversación</p>
+        </div>
+      </div>
+      <dl class="meta">
+        <div><dt>Periodo</dt><dd>16 jun – 3 jul 2026</dd></div>
+        <div><dt>Corte</dt><dd>3 jul 2026</dd></div>
+        <div><dt>Pruebas</dt><dd class="tnum" id="metaTotal">62</dd></div>
+      </dl>
+    </header>
+
+    <!-- ===== Veredicto ===== -->
+    <div class="verdict" id="verdict"></div>
+
+    <!-- ===== Filtro por fecha ===== -->
+    <section class="toolbar" aria-label="Filtro por fecha">
+      <div class="filter-group">
+        <span class="glabel">Filtrar por fecha</span>
+        <div class="daterange">
+          <label>Desde <input type="date" id="from"></label>
+          <label>Hasta <input type="date" id="to"></label>
+          <button class="chip-btn ghost" id="reset" type="button">Ver todo</button>
+        </div>
+      </div>
+      <button class="theme-toggle" id="themeBtn" type="button" aria-label="Cambiar tema">☾</button>
+    </section>
+
+    <!-- ===== LAS 2 GRÁFICAS ===== -->
+    <div class="gauges">
+      <section class="panel gauge-card">
+        <h2>Satisfacción</h2>
+        <p class="phead-note">% de respuestas correctas del bot.</p>
+        <div id="gaugeSat"></div>
+        <div class="gauge-cap" id="capSat"></div>
+        <div class="gauge-badge" id="badgeSat"></div>
+      </section>
+
+      <section class="panel gauge-card">
+        <h2>Respuesta &lt; 1 minuto</h2>
+        <p class="phead-note">% de respuestas entregadas en menos de un minuto.</p>
+        <div id="gaugeMin"></div>
+        <div class="gauge-cap" id="capMin"></div>
+        <div class="gauge-badge" id="badgeMin"></div>
+      </section>
+    </div>
+
+    <!-- ===== Estadísticas de apoyo ===== -->
+    <section class="stats" id="stats" aria-label="Datos de apoyo"></section>
+
+    <!-- ===== Fallas ===== -->
+    <section class="panel">
+      <h2>Fallas detectadas <span class="count" id="fallasCount"></span></h2>
+      <p class="phead-note">Respuestas marcadas “No satisfactorio” en el rango.</p>
+      <div class="flist" id="flist"></div>
+    </section>
+
+    <!-- ===== Nota ===== -->
+    <section class="panel note">
+      <div class="ic" aria-hidden="true">!</div>
+      <div>
+        <h3>Campos pendientes de diligenciar en la matriz</h3>
+        <p id="notaTxt"></p>
+      </div>
+    </section>
+
+    <footer>
+      <b>Fuente:</b> matriz de pruebas del asistente (Google Sheets) · <b>62 registros</b> entre el 16 jun y el 3 jul de 2026.<br>
+      <b>Cálculo:</b> Satisfacción = satisfactorias ÷ evaluadas · Respuesta &lt; 1 min = medidas que cumplieron ÷ medidas (se empezó a medir el 3 jul).
+    </footer>
+
+  </div>
+
+  <div id="tt"></div>
+  <noscript><p style="text-align:center;color:#888">Este tablero necesita JavaScript activado para mostrar los indicadores.</p></noscript>
+
+  <script src="script.js"></script>
+</body>
+</html>
